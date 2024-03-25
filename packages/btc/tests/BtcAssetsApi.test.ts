@@ -55,6 +55,34 @@ describe(
         expect(res.difficulty).toBeTypeOf('number');
         expect(res.bestblockhash).toBeTypeOf('string');
       });
+      it('Get block by hash', async () => {
+        const res = await service.getBlockByHash('0000000000000004f4b5575b73c356a06ca44d80c2f4cd1e5312a29bd8feb90e');
+        expect(res).toBeDefined();
+        expect(res.height).toBeTypeOf('number');
+        expect(res.version).toBeTypeOf('number');
+        expect(res.timestamp).toBeTypeOf('number');
+        expect(res.tx_count).toBeTypeOf('number');
+        expect(res.size).toBeTypeOf('number');
+        expect(res.weight).toBeTypeOf('number');
+        expect(res.merkle_root).toBeTypeOf('string');
+        expect(res.previousblockhash).toBeTypeOf('string');
+        expect(res.mediantime).toBeTypeOf('number');
+        expect(res.nonce).toBeTypeOf('number');
+        expect(res.bits).toBeTypeOf('number');
+        expect(res.difficulty).toBeTypeOf('number');
+      });
+      it('Get block header by hash', async () => {
+        const res = await service.getBlockHeaderByHash(
+          '0000000000000004f4b5575b73c356a06ca44d80c2f4cd1e5312a29bd8feb90e',
+        );
+        expect(res).toBeDefined();
+        expect(res.header).toBeTypeOf('string');
+      });
+      it('Get block hash by height', async () => {
+        const res = await service.getBlockHashByHeight(1);
+        expect(res).toBeDefined();
+        expect(res.hash).toBeTypeOf('string');
+      });
       it('Get balance', async () => {
         const res = await service.getBalance(accounts.charlie.p2wpkh.address);
         expect(res.address).toEqual('tb1qm06rvrq8jyyckzc5v709u7qpthel9j4d9f7nh3');

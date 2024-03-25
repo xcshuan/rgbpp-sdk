@@ -20,6 +20,30 @@ export interface BtcAssetsApiBlockchainInfo {
   mediantime: number;
 }
 
+export interface BtcAssetsApiBlock {
+  id: string;
+  height: number;
+  version: number;
+  timestamp: number;
+  tx_count: number;
+  size: number;
+  weight: number;
+  merkle_root: string;
+  previousblockhash: string;
+  mediantime: number;
+  nonce: number;
+  bits: number;
+  difficulty: number;
+}
+
+export interface BtcAssetsApiBlockHash {
+  hash: string;
+}
+
+export interface BtcAssetsApiBlockHeader {
+  header: string;
+}
+
 export interface BtcAssetsApiBalanceParams {
   min_satoshi?: number;
 }
@@ -220,6 +244,18 @@ export class BtcAssetsApi {
 
   getBlockchainInfo() {
     return this.request<BtcAssetsApiBlockchainInfo>('/bitcoin/v1/info');
+  }
+
+  getBlockByHash(hash: string) {
+    return this.request<BtcAssetsApiBlock>(`/bitcoin/v1/block/${hash}`);
+  }
+
+  getBlockHeaderByHash(hash: string) {
+    return this.request<BtcAssetsApiBlockHeader>(`/bitcoin/v1/block/${hash}/header`);
+  }
+
+  getBlockHashByHeight(height: number) {
+    return this.request<BtcAssetsApiBlockHash>(`/bitcoin/v1/block/height/${height}`);
   }
 
   getBalance(address: string, params?: BtcAssetsApiBalanceParams) {
